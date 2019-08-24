@@ -1,5 +1,8 @@
 'use  strict';
 
+//DECLARING GLOBAL VARIABLES
+var salesEl = document.getElementById('sales');
+
 //FUNCTIONS
 
 //function that generates a random number between two numbers (including min and max values)
@@ -8,7 +11,6 @@ function random(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 
 //STORING STORES INFORMATION
 
@@ -22,13 +24,10 @@ var stores = [
     minCustomers: 23,
     maxCustomers: 65,
     avgCookiePerCustomer: 6.3,
-    randomCustomers: function() {
-      return random(this.minCustomers, this.maxCustomers);
-    },
     cookiesSoldPerHour: function () {
       var cookiesSold =[];
       for (var i = 0; i < operationHours.length; i++) {
-        cookiesSold[i] = Math.floor(this.randomCustomers() * this.avgCookiePerCustomer);
+        cookiesSold[i] = Math.floor(random(this.minCustomers, this.maxCustomers) * this.avgCookiePerCustomer);
       }
       return cookiesSold;
     }
@@ -38,13 +37,10 @@ var stores = [
     minCustomers: 3,
     maxCustomers: 24,
     avgCookiePerCustomer: 1.2,
-    randomCustomers: function() {
-      return random(this.minCustomers, this.maxCustomers);
-    },
     cookiesSoldPerHour: function () {
       var cookiesSold =[];
       for (var i = 0; i < operationHours.length; i++) {
-        cookiesSold[i] = Math.floor(this.randomCustomers() * this.avgCookiePerCustomer);
+        cookiesSold[i] = Math.floor(random(this.minCustomers, this.maxCustomers) * this.avgCookiePerCustomer);
       }
       return cookiesSold;
     }
@@ -54,13 +50,10 @@ var stores = [
     minCustomers: 11,
     maxCustomers: 38,
     avgCookiePerCustomer: 3.7,
-    randomCustomers: function() {
-      return random(this.minCustomers, this.maxCustomers);
-    },
     cookiesSoldPerHour: function () {
       var cookiesSold =[];
       for (var i = 0; i < operationHours.length; i++) {
-        cookiesSold[i] = Math.floor(this.randomCustomers() * this.avgCookiePerCustomer);
+        cookiesSold[i] = Math.floor(random(this.minCustomers, this.maxCustomers) * this.avgCookiePerCustomer);
       }
       return cookiesSold;
     }
@@ -70,13 +63,10 @@ var stores = [
     minCustomers: 20,
     maxCustomers: 38,
     avgCookiePerCustomer: 2.3,
-    randomCustomers: function() {
-      return random(this.minCustomers, this.maxCustomers);
-    },
     cookiesSoldPerHour: function () {
       var cookiesSold =[];
       for (var i = 0; i < operationHours.length; i++) {
-        cookiesSold[i] = Math.floor(this.randomCustomers() * this.avgCookiePerCustomer);
+        cookiesSold[i] = Math.floor(random(this.minCustomers, this.maxCustomers) * this.avgCookiePerCustomer);
       }
       return cookiesSold;
     }
@@ -86,24 +76,33 @@ var stores = [
     minCustomers: 2,
     maxCustomers: 16,
     avgCookiePerCustomer: 4.6,
-    randomCustomers: function() {
-      return random(this.minCustomers, this.maxCustomers);
-    },
     cookiesSoldPerHour: function () {
       var cookiesSold =[];
       for (var i = 0; i < operationHours.length; i++) {
-        cookiesSold[i] = Math.floor(this.randomCustomers() * this.avgCookiePerCustomer);
+        cookiesSold[i] = Math.floor(random(this.minCustomers, this.maxCustomers) * this.avgCookiePerCustomer);
       }
       return cookiesSold;
     }
   }
 ];
 
-
 //generating list of sold cookies for each location
 for (var k = 0; k < stores.length; k++) {
-  console.log(stores[k].name + ': \n');
+  var ulEl = document.createElement('ul');
+  ulEl.id = stores[k].name;
+  ulEl.textContent = stores[k].name;
+  salesEl.appendChild(ulEl);
+  ulEl = document.getElementById(stores[k].name);
+  // console.log(stores[k].name + ': \n');
+  var total = 0;
   for (var i = 0; i < operationHours.length; i++) {
-    console.log(operationHours[i] + ': ' + stores[k].cookiesSoldPerHour()[i] + ' cookies');
+    var liEl = document.createElement('li');
+    liEl.textContent = `${operationHours[i]}: ${stores[k].cookiesSoldPerHour()[i]} cookies`;
+    ulEl.appendChild(liEl);
+    total += stores[k].cookiesSoldPerHour()[i];
+    // console.log(operationHours[i] + ': ' + stores[k].cookiesSoldPerHour()[i] + ' cookies');
   }
+  liEl = document.createElement('li');
+  liEl.textContent = `Total: ${total} cookies`;
+  ulEl.appendChild(liEl);
 }

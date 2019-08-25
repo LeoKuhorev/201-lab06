@@ -2,6 +2,7 @@
 
 //DECLARING GLOBAL VARIABLES
 var salesEl = document.getElementById('sales');
+var total;
 
 //FUNCTIONS
 
@@ -94,7 +95,7 @@ for (var k = 0; k < stores.length; k++) {
   salesEl.appendChild(ulEl);
   ulEl = document.getElementById(stores[k].name);
   // console.log(stores[k].name + ': \n');
-  var total = 0;
+  total = 0;
   for (var i = 0; i < operationHours.length; i++) {
     var liEl = document.createElement('li');
     liEl.textContent = `${operationHours[i]}: ${stores[k].cookiesSoldPerHour()[i]} cookies`;

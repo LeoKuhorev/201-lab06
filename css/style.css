@@ -16,6 +16,8 @@ nav h1 {
   height: 200px;
   font-size: 72pt;
   margin-top: 80px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 nav h1:hover {
   color: #f5e6e4;

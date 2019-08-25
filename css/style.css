@@ -1,5 +1,5 @@
 body {
-  background-image: url("/images/background_image.jpg");
+  background-image: url("../images/background_image.jpg");
   background-attachment: fixed;
 }
 nav {
@@ -136,12 +136,19 @@ p {
   cursor: context-menu;
 }
 footer {
+  text-align: right;
   background-color: darkgray;
   /* background-image: radial-gradient(circle, rgb(199, 197, 197), rgb(143, 140, 140)); */
   font-family: 'Poiret One', cursive;
   font-size: 16pt;
   font-weight: bold;
-  padding: 25px;
   border: 2px solid black;
   margin-top: 60px;
+}
+footer ul li {
+  display: inline-block;
+  padding: 20px 40px;
+}
+footer ul li:hover {  
+  color: #fac6be;
 }

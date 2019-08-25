@@ -103,6 +103,7 @@ for (var k = 0; k < stores.length; k++) {
     // console.log(operationHours[i] + ': ' + stores[k].cookiesSoldPerHour()[i] + ' cookies');
   }
   liEl = document.createElement('li');
+  liEl.id = 'total';
   liEl.textContent = `Total: ${total} cookies`;
   ulEl.appendChild(liEl);
 }

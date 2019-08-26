@@ -1,5 +1,6 @@
 body {
   background-image: url("../images/background_image_salmon.jpg");
+  background-attachment: fixed;
 }
 nav {
   font-family: 'Cabin Sketch', cursive;
@@ -14,7 +15,7 @@ nav h1 {
   position: absolute;
   left: 450px;
   height: 200px;
-  font-size: 72pt;
+  font-size: 60pt;
   margin-top: 80px;
   overflow: hidden;
   white-space: nowrap;

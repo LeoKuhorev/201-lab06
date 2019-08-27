@@ -16,4 +16,4 @@ The data for the lists is basing on this table:
 for every hour of operation it generates a random number of customers between min and max customers from the table above
 
 
-all pictures taken from (unsplash.com)[https://unsplash.com/]
+all pictures taken from [unsplash.com](https://unsplash.com/)

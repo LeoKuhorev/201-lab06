@@ -1,8 +1,11 @@
 'use  strict';
 
-//DECLARING GLOBAL VARIABLES
+//GLOBAL VARIABLES
 var salesEl = document.getElementById('sales');
 var dailyLocationsTotal;
+var trEl;
+var thEl;
+var tdEl;
 
 //FUNCTIONS
 //function that generates a random number between two numbers (including min and max values)
@@ -10,6 +13,26 @@ function generateRandom(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//function to render <tr> element
+function renderTr(parentElement) {
+  trEl = document.createElement('tr');
+  parentElement.appendChild(trEl);
+}
+
+//function to render <th> element
+function renderTh(textContent, parentElement){
+  thEl = document.createElement('th');
+  thEl.textContent = textContent;
+  parentElement.appendChild(thEl);
+}
+
+//function to render <td> element
+function renderTd(textContent, parentElement) {
+  tdEl = document.createElement('td');
+  tdEl.textContent = textContent;
+  parentElement.appendChild(tdEl);
 }
 
 //store object constructor function
@@ -35,22 +58,26 @@ function Store(name, minCustomers, maxCustomers, avgCookiePerCustomer) {
       this.totalPerLocation += cookiesSold;
     }
   };
-  this.randomCookies();
+  this.render = function() {
+    this.randomCookies();
+    renderTr(salesEl);
+    renderTd(this.name, trEl);
+    for (var i = 0; i < operationHoursArr.length; i++) {
+      renderTd(this.cookiesSoldPerHourArr[i], trEl);
+    }
+    renderTd(this.totalPerLocation, trEl);
+  };
   storesArr.push(this);
 }
 
 //function to render table header row
 function renderHeader() {
-  var trEl = document.createElement('tr');
-  salesEl.appendChild(trEl);
+  renderTr(salesEl);
+  renderTh('LOCATON', trEl);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    var thEl = document.createElement('th');
-    thEl.textContent = operationHoursArr[i];
-    trEl.appendChild(thEl);
+    renderTh(operationHoursArr[i], trEl);
   }
-  thEl = document.createElement('th');
-  thEl.textContent = 'Daily location total';
-  trEl.appendChild(thEl);
+  renderTh('DAILY LOCATION TOTAL', trEl);
 }
 
 //founction for getting hourly total
@@ -69,16 +96,21 @@ function hourlyTotal() {
 //function to render footer (hourly total) row
 function renderFooter() {
   hourlyTotal();
-  var trEl = document.createElement('tr');
-  salesEl.appendChild(trEl);
+  renderTr(salesEl);
+  renderTd('TOTALS', trEl);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    var tdEl = document.createElement('td');
-    tdEl.textContent = totalPerHourArr[i];
-    trEl.appendChild(tdEl);
+    renderTd(totalPerHourArr[i], trEl);
   }
-  tdEl = document.createElement('td');
-  tdEl.textContent = dailyLocationsTotal;
-  trEl.appendChild(tdEl);
+  renderTd(dailyLocationsTotal, trEl);
+}
+
+//function to render the entire sales table
+function renderSalesTable() {
+  renderHeader();
+  for (var i = 0; i < storesArr.length; i++) {
+    storesArr[i].render();
+  }
+  renderFooter();
 }
 
 //STORES INFORMATION
@@ -94,7 +126,6 @@ var totalPerHourArr = [];
 //array with store objects
 var storesArr = [];
 
-
 //creating stores using Store constructor function
 new Store ('1st and Pike', 23, 65, 6.3);
 new Store ('SeaTac Airport', 3, 24, 1.2);
@@ -102,27 +133,5 @@ new Store ('Seattle Center', 11, 38, 3.7);
 new Store ('Capitol Hill', 20, 38, 2.3);
 new Store ('Alki', 2, 16, 4.6);
 
-
 //RENDERING
-//generating list of sold cookies for each location
-renderHeader();
-renderFooter();
-
-// for (k = 0; k < storesArr.length; k++) {
-//   var ulEl = document.createElement('ul');
-//   ulEl.id = storesArr[k].name;
-//   ulEl.textContent = storesArr[k].name;
-//   salesEl.appendChild(ulEl);
-//   ulEl = document.getElementById(storesArr[k].name);
-//   // console.log(storesArr[k].name + ': \n');
-//   for (i = 0; i < operationHoursArr.length; i++) {
-//     var liEl = document.createElement('li');
-//     liEl.textContent = `${operationHoursArr[i]}: ${storesArr[k].cookiesSoldPerHourArr[i]} cookies`;
-//     ulEl.appendChild(liEl);
-//     // console.log(operationHoursArr[i] + ': ' + storesArr[k].cookiesSoldPerHourArr[i] + ' cookies');
-//   }
-//   liEl = document.createElement('li');
-//   liEl.id = 'total';
-//   liEl.textContent = `Total: ${storesArr[k].totalPerLocation} cookies`;
-//   ulEl.appendChild(liEl);
-// }
+renderSalesTable();

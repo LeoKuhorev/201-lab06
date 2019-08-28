@@ -2,7 +2,9 @@
 
 //GLOBAL VARIABLES
 var salesEl = document.getElementById('sales');
-var dailyLocationsTotal;
+var staffEl = document.getElementById('staff');
+var dailyLocationCookiesTotal;
+var dailyLocationTossersTotal;
 var trEl;
 var thEl;
 var tdEl;
@@ -15,20 +17,20 @@ function generateRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//function to render <tr> element
+//function for rendering <tr> element
 function renderTr(parentElement) {
   trEl = document.createElement('tr');
   parentElement.appendChild(trEl);
 }
 
-//function to render <th> element
+//function for rendering <th> element
 function renderTh(textContent, parentElement){
   thEl = document.createElement('th');
   thEl.textContent = textContent;
   parentElement.appendChild(thEl);
 }
 
-//function to render <td> element
+//function for rendering <td> element
 function renderTd(textContent, parentElement) {
   tdEl = document.createElement('td');
   tdEl.textContent = textContent;
@@ -36,81 +38,114 @@ function renderTd(textContent, parentElement) {
 }
 
 //store object constructor function
-function Store(name, minCustomers, maxCustomers, avgCookiePerCustomer) {
+function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
   this.name = name;
   this.minCustomers = minCustomers;
   this.maxCustomers = maxCustomers;
-  this.avgCookiePerCustomer = avgCookiePerCustomer;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
   this.customersPerHourArr = [];
+  this.tossersPerHourArr = [];
   this.cookiesSoldPerHourArr = [];
   this.totalPerLocation = 0;
+  this.maxTossers = 0;
   this.randomCustomers = function () {
     for (var i = 0; i < operationHoursArr.length; i++){
-      var random = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
-      this.customersPerHourArr.push(random);
+      var randomCustomersPerHour = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
+      this.customersPerHourArr.push(randomCustomersPerHour);
+      var tossersPerHour = Math.ceil(randomCustomersPerHour/20);
+      if (tossersPerHour < 2) {
+        this.tossersPerHourArr.push(2);
+      } else {
+        this.tossersPerHourArr.push(tossersPerHour);
+      }
     }
+    this.maxTossers = Math.max.apply(null, this.tossersPerHourArr);
   };
   this.randomCookies = function() {
     this.randomCustomers();
     for (var i = 0; i < operationHoursArr.length; i++){
-      var cookiesSold = Math.floor(this.customersPerHourArr[i] * this.avgCookiePerCustomer);
+      var cookiesSold = Math.floor(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
       this.cookiesSoldPerHourArr.push(cookiesSold);
       this.totalPerLocation += cookiesSold;
     }
   };
-  this.render = function() {
+  this.renderSales = function() {
     this.randomCookies();
     renderTr(salesEl);
-    renderTd(this.name, trEl);
+    renderTd(this.name, salesEl);
     for (var i = 0; i < operationHoursArr.length; i++) {
-      renderTd(this.cookiesSoldPerHourArr[i], trEl);
+      renderTd(this.cookiesSoldPerHourArr[i], salesEl);
     }
-    renderTd(this.totalPerLocation, trEl);
+    renderTd(this.totalPerLocation, salesEl);
+  };
+  this.renderTossers = function() {
+    renderTr(staffEl);
+    renderTd(this.name, staffEl);
+    for (var i = 0; i < operationHoursArr.length; i++) {
+      renderTd(this.tossersPerHourArr[i], staffEl);
+    }
+    renderTd(this.maxTossers, staffEl);
   };
   storesArr.push(this);
 }
 
-//function to render table header row
-function renderHeader() {
-  renderTr(salesEl);
-  renderTh('LOCATON', trEl);
+//function for rendering table header row
+function renderHeader(totalRowName, parentElement) {
+  renderTr(parentElement);
+  renderTh('LOCATON / TIME', parentElement);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTh(operationHoursArr[i], trEl);
+    renderTh(operationHoursArr[i], parentElement);
   }
-  renderTh('DAILY LOCATION TOTAL', trEl);
+  renderTh(totalRowName, parentElement);
 }
 
-//founction for getting hourly total
+//function for getting hourly total
 function hourlyTotal() {
   for (var i = 0; i < operationHoursArr.length; i++) {
-    var totalPerHour = 0;
-    dailyLocationsTotal = 0;
+    var totalCookiesPerHour = 0;
+    var totalTossersPerHour = 0;
+    dailyLocationCookiesTotal = 0;
+    dailyLocationTossersTotal = 0;
     for (var k = 0; k < storesArr.length; k++) {
-      totalPerHour += storesArr[k].cookiesSoldPerHourArr[i];
-      dailyLocationsTotal += storesArr[k].totalPerLocation;
+      totalCookiesPerHour += storesArr[k].cookiesSoldPerHourArr[i];
+      totalTossersPerHour += storesArr[k].tossersPerHourArr[i];
+      dailyLocationCookiesTotal += storesArr[k].totalPerLocation;
+      dailyLocationTossersTotal += storesArr[k].maxTossers;
     }
-    totalPerHourArr.push(totalPerHour);
+    totalCookiesPerHourArr.push(totalCookiesPerHour);
+    totalTossersPerHourArr.push(totalTossersPerHour);
   }
 }
 
-//function to render footer (hourly total) row
-function renderFooter() {
-  hourlyTotal();
-  renderTr(salesEl);
-  renderTd('TOTALS', trEl);
+//function for rendering footer (hourly total) row
+function renderFooter(hourlyValueArr, dailyValue, parentElement) {
+  // hourlyTotal();
+  renderTr(parentElement);
+  renderTd('TOTALS', parentElement);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTd(totalPerHourArr[i], trEl);
+    renderTd(hourlyValueArr[i], parentElement);
   }
-  renderTd(dailyLocationsTotal, trEl);
+  renderTd(dailyValue, parentElement);
 }
 
-//function to render the entire sales table
+//function for rendering the entire sales table
 function renderSalesTable() {
-  renderHeader();
+  renderHeader('DAILY LOCATION TOTAL', salesEl);
   for (var i = 0; i < storesArr.length; i++) {
-    storesArr[i].render();
+    storesArr[i].renderSales();
   }
-  renderFooter();
+  hourlyTotal();
+  renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesEl);
+}
+
+//function for rendering staffing table
+function renderStaffTable() {
+  renderHeader('DAILY LOCATION MAX', staffEl);
+  for (var i = 0; i < storesArr.length; i++) {
+    storesArr[i].renderTossers();
+  }
+  hourlyTotal();
+  renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffEl);
 }
 
 //STORES INFORMATION
@@ -120,8 +155,9 @@ var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM',
 // adjustments for foot traffic based on research
 var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
 
-//array with hourly total of cookies sold
-var totalPerHourArr = [];
+//arrays with hourly totals of cookies sold and tossers needed
+var totalCookiesPerHourArr = [];
+var totalTossersPerHourArr = [];
 
 //array with store objects
 var storesArr = [];
@@ -135,3 +171,4 @@ new Store ('Alki', 2, 16, 4.6);
 
 //RENDERING
 renderSalesTable();
+renderStaffTable();

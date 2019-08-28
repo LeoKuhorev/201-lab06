@@ -91,6 +91,9 @@ h2 {
   font-size: 20pt;
   font-weight: bolder;
   letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+h6 {
   margin-bottom: 40px;
 }
 #about img, #our-cookies img {
@@ -116,7 +119,7 @@ p {
   line-height: 2em;
   text-align: justify;
 }
-#sales {
+#data {
   position: relative;
   text-align: center;
   width: 90%;
@@ -127,7 +130,7 @@ p {
   font-size: 16pt;
   font-weight: bold;
 }
- #sales ul {
+/* #sales ul {
   font-family: 'Fredericka the Great', cursive;
   display: inline-block;
 }
@@ -148,7 +151,7 @@ p {
   border-left: none;
   border-right: none;
   font-family: 'Fredericka the Great', cursive;
-}
+} */
 footer {
   text-align: right;
   color: #fad5cf;

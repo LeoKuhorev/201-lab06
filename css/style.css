@@ -130,6 +130,9 @@ p {
   font-size: 16pt;
   font-weight: bold;
 }
+table {
+  color: red;
+}
 /* #sales ul {
   font-family: 'Fredericka the Great', cursive;
   display: inline-block;

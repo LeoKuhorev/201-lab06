@@ -1,8 +1,12 @@
 'use  strict';
 
 //GLOBAL VARIABLES
-var salesEl = document.getElementById('sales');
-var staffEl = document.getElementById('staff');
+var salesHeadEl = document.getElementById('sales-head');
+var salesBodyEl = document.getElementById('sales-body');
+var salesFooterEl = document.getElementById('sales-foot');
+var staffHeadEl = document.getElementById('staff-head');
+var staffBodyEl = document.getElementById('staff-body');
+var staffFooterEl = document.getElementById('staff-foot');
 var dailyLocationCookiesTotal;
 var dailyLocationTossersTotal;
 var trEl;
@@ -71,20 +75,20 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
   };
   this.renderSales = function() {
     this.randomCookies();
-    renderTr(salesEl);
-    renderTd(this.name, salesEl);
+    renderTr(salesBodyEl);
+    renderTd(this.name, trEl);
     for (var i = 0; i < operationHoursArr.length; i++) {
-      renderTd(this.cookiesSoldPerHourArr[i], salesEl);
+      renderTd(this.cookiesSoldPerHourArr[i], trEl);
     }
-    renderTd(this.totalPerLocation, salesEl);
+    renderTd(this.totalPerLocation, trEl);
   };
   this.renderTossers = function() {
-    renderTr(staffEl);
-    renderTd(this.name, staffEl);
+    renderTr(staffBodyEl);
+    renderTd(this.name, trEl);
     for (var i = 0; i < operationHoursArr.length; i++) {
-      renderTd(this.tossersPerHourArr[i], staffEl);
+      renderTd(this.tossersPerHourArr[i], trEl);
     }
-    renderTd(this.maxTossers, staffEl);
+    renderTd(this.maxTossers, trEl);
   };
   storesArr.push(this);
 }
@@ -92,11 +96,11 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
 //function for rendering table header row
 function renderHeader(totalRowName, parentElement) {
   renderTr(parentElement);
-  renderTh('LOCATON / TIME', parentElement);
+  renderTh('LOCATON / TIME', trEl);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTh(operationHoursArr[i], parentElement);
+    renderTh(operationHoursArr[i], trEl);
   }
-  renderTh(totalRowName, parentElement);
+  renderTh(totalRowName, trEl);
 }
 
 //function for getting hourly total
@@ -119,33 +123,32 @@ function hourlyTotal() {
 
 //function for rendering footer (hourly total) row
 function renderFooter(hourlyValueArr, dailyValue, parentElement) {
-  // hourlyTotal();
   renderTr(parentElement);
-  renderTd('TOTALS', parentElement);
+  renderTd('TOTALS', trEl);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTd(hourlyValueArr[i], parentElement);
+    renderTd(hourlyValueArr[i], trEl);
   }
-  renderTd(dailyValue, parentElement);
+  renderTd(dailyValue, trEl);
 }
 
 //function for rendering the entire sales table
 function renderSalesTable() {
-  renderHeader('DAILY LOCATION TOTAL', salesEl);
+  renderHeader('DAILY LOCATION TOTAL', salesHeadEl);
   for (var i = 0; i < storesArr.length; i++) {
     storesArr[i].renderSales();
   }
   hourlyTotal();
-  renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesEl);
+  renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
 }
 
 //function for rendering staffing table
 function renderStaffTable() {
-  renderHeader('DAILY LOCATION MAX', staffEl);
+  renderHeader('DAILY LOCATION MAX', staffHeadEl);
   for (var i = 0; i < storesArr.length; i++) {
     storesArr[i].renderTossers();
   }
   hourlyTotal();
-  renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffEl);
+  renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
 //STORES INFORMATION

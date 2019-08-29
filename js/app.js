@@ -7,11 +7,11 @@ var salesFooterEl = document.getElementById('sales-foot');
 var staffHeadEl = document.getElementById('staff-head');
 var staffBodyEl = document.getElementById('staff-body');
 var staffFooterEl = document.getElementById('staff-foot');
-var dailyLocationCookiesTotal;
-var dailyLocationTossersTotal;
 var trEl;
 var thEl;
 var tdEl;
+var dailyLocationCookiesTotal;
+var dailyLocationTossersTotal;
 
 //FUNCTIONS
 //function that generates a random number between two numbers (including min and max values)
@@ -19,6 +19,15 @@ function generateRandom(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//function that count avg array value
+function avg(array) {
+  var sum = 0;
+  for (var i = 0; i < array.length; i++) {
+    sum += array[i];
+  }
+  return(sum / array.length);
 }
 
 //function for rendering <tr> element
@@ -78,7 +87,12 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
     renderTr(salesBodyEl);
     renderTd(this.name, trEl);
     for (var i = 0; i < operationHoursArr.length; i++) {
-      renderTd(this.cookiesSoldPerHourArr[i], trEl);
+      if (this.cookiesSoldPerHourArr[i] > avg(this.cookiesSoldPerHourArr)) {
+        renderTd(this.cookiesSoldPerHourArr[i], trEl);
+        tdEl.className = 'red';
+      } else {
+        renderTd(this.cookiesSoldPerHourArr[i], trEl);
+      }
     }
     renderTd(this.totalPerLocation, trEl);
   };
@@ -86,9 +100,19 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
     renderTr(staffBodyEl);
     renderTd(this.name, trEl);
     for (var i = 0; i < operationHoursArr.length; i++) {
-      renderTd(this.tossersPerHourArr[i], trEl);
+      if (this.tossersPerHourArr[i] > avg(this.tossersPerHourArr)) {
+        renderTd(this.tossersPerHourArr[i], trEl);
+        tdEl.className = 'red';
+      } else {
+        renderTd(this.tossersPerHourArr[i], trEl);
+      }
     }
-    renderTd(this.maxTossers, trEl);
+    if (this.maxTossers > avg(this.tossersPerHourArr)) {
+      renderTd(this.maxTossers, trEl);
+      tdEl.className = 'red';
+    } else {
+      renderTd(this.maxTossers, trEl);
+    }
   };
   storesArr.push(this);
 }
@@ -126,7 +150,12 @@ function renderFooter(hourlyValueArr, dailyValue, parentElement) {
   renderTr(parentElement);
   renderTd('TOTALS', trEl);
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTd(hourlyValueArr[i], trEl);
+    if (hourlyValueArr[i] > avg(hourlyValueArr)) {
+      renderTd(hourlyValueArr[i], trEl);
+      tdEl.className = 'red';
+    } else {
+      renderTd(hourlyValueArr[i], trEl);
+    }
   }
   renderTd(dailyValue, trEl);
 }

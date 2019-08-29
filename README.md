@@ -1,6 +1,8 @@
 # 201-lab06
 This is a "cookie-stand" project for Code Fellows 201
 
+deployed site link: https://leokuhorev.github.io/cookie-stand/sales.html
+
 So far sales.html page generates a list of cookies sold at each location for an imaginary store.
 
 The data for the lists is basing on this table:

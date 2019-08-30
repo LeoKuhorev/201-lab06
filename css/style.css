@@ -10,9 +10,12 @@ nav {
   border: 2px solid black;
   width: 100%;
 }
+nav a {
+  cursor: pointer;
+}
 nav h1 {
   color: #fad5cf;
-  float: left;
+  float: right;
   position: absolute;
   left: 450px;
   height: 200px;
@@ -60,7 +63,6 @@ nav h1:hover {
   margin: 20px;
   border-radius: 50%;
   box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
-  border: 3px dotted black;
 }
 #logo:hover {
   transform: translateY(4px);
@@ -69,6 +71,42 @@ nav h1:hover {
   background-color:#fac6be;
   box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
   transform: translateY(4px);
+}
+.login-container {
+  float: right;
+  position: relative;
+  top: 170px;
+  right: 20px;
+  z-index: 5;
+}
+::placeholder {
+  color:black;
+}
+.login-container button {
+  font-family: 'Poiret One', cursive;
+  font-size: 16pt;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 10px;
+  border: none;
+  border-radius: 3px;
+}
+input {
+  width: 25%;
+  padding: 5px 10px;
+  margin: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  font-family: 'Poiret One', cursive;
+  font-size: 16pt;
+  border: none;
+  border-radius: 3px;
+}
+input:hover, input:active, .login-container button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+#welcome {
+  font-family: 'Poiret One', cursive;
+  color: #f5e6e4;
 }
 main {
   background: rgba(255, 255, 255, 0.8);
@@ -138,6 +176,7 @@ table {
   border-collapse: collapse;
   font-size: 14pt;
   font-weight: 900;
+  box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
 }
 thead tr th:first-child,
 tbody tr td:first-child {
@@ -167,12 +206,9 @@ td:hover, th:hover {
   color: white;
   font-weight: 900;
 }
-/* tfoot {
-  background: rgba(56, 51, 51, 0.3);
-} */
 footer {
   text-align: right;
-  color: #fad5cf;
+  color: #fad5cf; 
   background: rgba(56, 51, 51, 0.7);
   font-family: 'Poiret One', cursive;
   font-size: 16pt;

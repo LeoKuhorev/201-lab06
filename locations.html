@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Locations</title>
+    <link rel="icon" href="https://img.icons8.com/plasticine/100/000000/cookie.png" type="image/x-icon">
     <link href="css/reset.css" type="text/css" rel="stylesheet" />
     <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Fredericka+the+Great|Life+Savers|Poiret+One&display=swap" rel="stylesheet">
@@ -9,6 +10,13 @@
   <body>
     <header>
       <nav>
+        <div class="login-container">
+            <form id="login-form">
+              <input id="username" type="text" placeholder="Username" name="username">
+              <input id="password" type="text" placeholder="Password" name="psw">
+              <button type="button" id="submit">Login</button>
+            </form>
+        </div>
         <h1>FAMOUS PAT'S SALMON</h1>
         <div class="dropdown">
           <a href="index.html" ><img src="images/logo.gif" alt="Salmon logo" id="logo" ></a>
@@ -17,7 +25,7 @@
                 <a href="index.html"><li>HOME</li></a>
                 <a href="index.html#about"><li>OUR STORY</li></a>
                 <a href="index.html#our-cookies"><li>OUR COOKIES</li></a>
-                <a href="sales.html"><li>SALES</li></a>
+                <a id="login"><li>SALES</li></a>
               </ul>
             </div>
           </div>
@@ -40,6 +48,6 @@
         <a href="mailto:patsalmon@gmail.com"><li>CONTACT US</li></a>
       </ul>
     </footer>
-    <script src="js/app.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@ var salesFooterEl = document.getElementById('sales-foot');
 var staffHeadEl = document.getElementById('staff-head');
 var staffBodyEl = document.getElementById('staff-body');
 var staffFooterEl = document.getElementById('staff-foot');
+// var loginButton = document.getElementById('login');
 var trEl;
 var thEl;
 var tdEl;

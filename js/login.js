@@ -7,15 +7,17 @@ var showMessage = true;
 function showSales () {
   var userNameEl = document.getElementById('username');
   var passwordEl = document.getElementById('password');
-  if (userNameEl.value.toLowerCase() === 'pat' && passwordEl.value === 'Salmon') {
-    loginSalesEl.href = 'sales.html';
-    loginSalesEl.innerHTML = '<li>SALES</li>';
-    loginFormEl.innerHTML = '<p id="welcome">Welcome Pat! Sales page is available now<p>';
-    showMessage = false;
+  if (userNameEl.value.toLowerCase() === 'pat') {
+    if (passwordEl.value === 'Salmon') {
+      loginSalesEl.href = 'sales.html';
+      loginSalesEl.innerHTML = '<li>SALES</li>';
+      loginFormEl.innerHTML = '<p id="welcome">Welcome Pat! Sales page is available now<p>';
+      showMessage = false;
+    } else {
+      alert('incorrect password!');
+    }
   } else {
-    alert('incorrect name/password!');
-    console.log(`username is: ${userNameEl.value} password is: ${passwordEl.value}`);
-
+    alert(`there's no no registred user with name ${userNameEl.value}`);
   }
 }
 

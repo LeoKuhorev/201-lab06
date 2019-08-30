@@ -3,9 +3,10 @@ This is a "cookie-stand" project for Code Fellows 201
 
 deployed site link: https://leokuhorev.github.io/cookie-stand/sales.html
 
-So far sales.html page generates a list of cookies sold at each location for an imaginary store.
+To get access to Sales.html page - enter username **_Pat_** and Password **_Salmon_**
 
-The data for the lists is basing on this table:
+
+The data for the lists is based on this table:
 
 | Location      |  Min / Cust | Max / Cust  | Avg Cookie / Sale | 
 |---------------|-------------|-------------|-------------------|
@@ -19,3 +20,4 @@ for every hour of operation it generates a random number of customers between mi
 
 
 all pictures taken from [unsplash.com](https://unsplash.com/)
+Cookie icon by [Icons8](https://icons8.com/icon/97693/cookie)

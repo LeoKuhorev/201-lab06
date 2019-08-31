@@ -20,4 +20,5 @@ for every hour of operation it generates a random number of customers between mi
 
 
 all pictures taken from [unsplash.com](https://unsplash.com/)
+
 Cookie icon by [Icons8](https://icons8.com/icon/97693/cookie)

@@ -32,13 +32,13 @@
           <form id="new-store">
             <fieldset>
                 <label>Store Name:</label>
-                <input name="storename" type="text" class="white" placeholder="Store name" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="storename" type="text" class="white" placeholder="Enter store name" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Minimum customers:</label>
-                <input name="mincustomers" type="number" class="white" min="0" placeholder="Minimum customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="mincustomers" type="number" class="white" min="0" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Maximum customers:</label>
-                <input name="maxcustomemrs" type="number" class="white" min="0" placeholder="Maximum customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="maxcustomemrs" type="number" class="white" min="0" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Cookies per customer:</label>
-                <input name="cookiespercustomer" type="number" class="white" step="0.1" min="0" placeholder="Cookies per customer" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="cookiespercustomer" type="number" class="white" step="0.1" min="0" placeholder="Enter number of cookies" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <input id="addstore" type="submit" name="addnewstore" value="ADD NEW STORE" />
             </fieldset>
           </form>
@@ -46,9 +46,9 @@
         <section id="data">
           <div id="sales">
             <h2>PROJECTED HOURLY SALES:</h2>
-            <h6>How many cookies needed per location per hour (values above average are red)</h6>
+            <h6>How many cookies needed per location per hour ( <span class="green">&nbsp&nbsp&nbsp</span> &lt; 80% of avg, <span class="yellow">&nbsp&nbsp&nbsp</span> - avg, <span class="red">&nbsp&nbsp&nbsp</span> &gt; 120% avg)</h6>
             <table id="sales-table">
-              <thead id="sales-head"></thead>
+              <thead id="sales-head" class="grey"></thead>
               <tbody id="sales-body"></tbody>
               <tfoot id="sales-foot"></tfoot>
             </table>
@@ -56,9 +56,9 @@
           </div>
           <div id="staff">
             <h2>STAFFING:</h2>
-            <h6>How many tossers needed per location per hour (values above average are red)</h6>
+            <h6>How many tossers needed per location per hour ( <span class="green">&nbsp&nbsp&nbsp</span> &lt; 80% of avg, <span class="yellow">&nbsp&nbsp&nbsp</span> - avg, <span class="red">&nbsp&nbsp&nbsp</span> &gt; 120% avg)</h6>
             <table id="staff-table"> 
-              <thead id="staff-head"></thead>
+              <thead id="staff-head" class="grey"></thead>
               <tbody id="staff-body"></tbody>
               <tfoot id="staff-foot"></tfoot>
             </table>

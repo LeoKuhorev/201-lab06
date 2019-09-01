@@ -3,10 +3,9 @@ This is a "cookie-stand" project for Code Fellows 201
 
 deployed site link: https://leokuhorev.github.io/cookie-stand/
 
-There's imitation of a login, so to get access to Sales.html page - enter username **_Pat_** and Password **_Salmon_**
+index.html pahe has imitation of login, so to get access to sales.html page - enter username **_Pat_** and Password **_Salmon_**
 
-
-The data for the lists is based on this table:
+sales.html page shows 2 tables based on the incoming data from this table:
 
 | Location      |  Min / Cust | Max / Cust  | Avg Cookie / Sale | 
 |---------------|-------------|-------------|-------------------|
@@ -15,6 +14,8 @@ The data for the lists is based on this table:
 | Seattle Center| 11          | 38          |3.7                |
 | Capitol Hill  | 	20        | 38          | 2.3               |
 | Alki          | 2           |  16         |  4.6              |
+
+Number of customers each tosser can serve changed from 20 to 10 to add more diversity to the tossers table.
 
 for every hour of operation it generates a random number of customers between min and max customers from the table above
 

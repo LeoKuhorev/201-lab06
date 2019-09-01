@@ -208,19 +208,20 @@ function addNewStore(e) {
   var maxCustomemrs = parseInt(e.target.maxcustomemrs.value);
   var cookiesPerCustomer = parseInt(e.target.cookiespercustomer.value);
 
-  if (storeName !== '' && !isNaN(minCustomers) && !isNaN(maxCustomemrs) && !isNaN(cookiesPerCustomer) ) {
-    new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
-    salesFooterEl.innerHTML = '';
-    for (var i = storesArr.length-1; i < storesArr.length; i++) {
-      storesArr[i].renderSales();
-    }
-    hourlyTotal();
-    renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
-    e.target.storename.value = '';
-    e.target.mincustomers.value = '';
-    e.target.maxcustomemrs.value = '';
-    e.target.cookiespercustomer.value = '';
+  new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
+  salesFooterEl.innerHTML = '';
+  staffFooterEl.innerHTML = '';
+  for (var i = storesArr.length-1; i < storesArr.length; i++) {
+    storesArr[i].renderSales();
+    storesArr[i].renderTossers();
   }
+  hourlyTotal();
+  renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
+  renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
+  e.target.storename.value = '';
+  e.target.mincustomers.value = '';
+  e.target.maxcustomemrs.value = '';
+  e.target.cookiespercustomer.value = '';
 }
 
 

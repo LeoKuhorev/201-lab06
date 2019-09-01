@@ -1,9 +1,9 @@
 # 201-lab06
 This is a "cookie-stand" project for Code Fellows 201
 
-deployed site link: https://leokuhorev.github.io/cookie-stand/sales.html
+deployed site link: https://leokuhorev.github.io/cookie-stand/
 
-To get access to Sales.html page - enter username **_Pat_** and Password **_Salmon_**
+There's imitation of a login, so to get access to Sales.html page - enter username **_Pat_** and Password **_Salmon_**
 
 
 The data for the lists is based on this table:

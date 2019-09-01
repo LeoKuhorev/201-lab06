@@ -217,13 +217,13 @@ function addNewStore(e) {
   renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
   e.target.storename.value = '';
-  e.target.storename.className = '';
+  e.target.storename.className = 'white';
   e.target.mincustomers.value = '';
-  e.target.mincustomers.className = '';
+  e.target.mincustomers.className = 'white';
   e.target.maxcustomemrs.value = '';
-  e.target.maxcustomemrs.className = '';
+  e.target.maxcustomemrs.className = 'white';
   e.target.cookiespercustomer.value = '';
-  e.target.cookiespercustomer.className = '';
+  e.target.cookiespercustomer.className = 'white';
 }
 
 //creating stores using Store constructor function

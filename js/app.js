@@ -1,15 +1,32 @@
 'use  strict';
 
 //GLOBAL VARIABLES
+//DOM elements
 var salesHeadEl = document.getElementById('sales-head');
 var salesBodyEl = document.getElementById('sales-body');
 var salesFooterEl = document.getElementById('sales-foot');
 var staffHeadEl = document.getElementById('staff-head');
 var staffBodyEl = document.getElementById('staff-body');
 var staffFooterEl = document.getElementById('staff-foot');
+var newStoreEl = document.getElementById('new-store');
 var trEl;
 var thEl;
 var tdEl;
+
+// hours of operation
+var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+
+// adjustments for foot traffic based on research
+var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+
+//arrays with hourly totals of cookies sold and tossers needed
+var totalCookiesPerHourArr = [];
+var totalTossersPerHourArr = [];
+
+//array with store objects
+var storesArr = [];
+
+//totals for location
 var dailyLocationCookiesTotal;
 var dailyLocationTossersTotal;
 
@@ -140,8 +157,8 @@ function hourlyTotal() {
       dailyLocationCookiesTotal += storesArr[k].totalPerLocation;
       dailyLocationTossersTotal += storesArr[k].maxTossers;
     }
-    totalCookiesPerHourArr.push(totalCookiesPerHour);
-    totalTossersPerHourArr.push(totalTossersPerHour);
+    totalCookiesPerHourArr[i] = totalCookiesPerHour;
+    totalTossersPerHourArr[i] = totalTossersPerHour;
   }
 }
 
@@ -180,19 +197,34 @@ function renderStaffTable() {
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
-//STORES INFORMATION
-// hours of operation
-var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+//function for adding new stores
+function addNewStore(e) {
+  e.preventDefault();
 
-// adjustments for foot traffic based on research
-var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+  var storeName = e.target.storename.value;
+  var minCustomers = parseInt(e.target.mincustomers.value);
+  var maxCustomemrs = parseInt(e.target.maxcustomemrs.value);
+  var cookiesPerCustomer = parseInt(e.target.cookiespercustomer.value);
 
-//arrays with hourly totals of cookies sold and tossers needed
-var totalCookiesPerHourArr = [];
-var totalTossersPerHourArr = [];
-
-//array with store objects
-var storesArr = [];
+  new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
+  salesFooterEl.innerHTML = '';
+  staffFooterEl.innerHTML = '';
+  for (var i = storesArr.length-1; i < storesArr.length; i++) {
+    storesArr[i].renderSales();
+    storesArr[i].renderTossers();
+  }
+  hourlyTotal();
+  renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
+  renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
+  e.target.storename.value = '';
+  e.target.storename.className = '';
+  e.target.mincustomers.value = '';
+  e.target.mincustomers.className = '';
+  e.target.maxcustomemrs.value = '';
+  e.target.maxcustomemrs.className = '';
+  e.target.cookiespercustomer.value = '';
+  e.target.cookiespercustomer.className = '';
+}
 
 //creating stores using Store constructor function
 new Store ('1st and Pike', 23, 65, 6.3);
@@ -200,6 +232,9 @@ new Store ('SeaTac Airport', 3, 24, 1.2);
 new Store ('Seattle Center', 11, 38, 3.7);
 new Store ('Capitol Hill', 20, 38, 2.3);
 new Store ('Alki', 2, 16, 4.6);
+
+//EVENT LISTENERS
+newStoreEl.addEventListener('submit', addNewStore);
 
 //RENDERING
 renderSalesTable();

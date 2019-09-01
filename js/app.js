@@ -146,7 +146,6 @@ function renderHeader(totalRowName, parentElement) {
 
 //function for getting hourly total
 function hourlyTotal() {
-  console.log('hourlyTotal function runs');
   for (var i = 0; i < operationHoursArr.length; i++) {
     var totalCookiesPerHour = 0;
     var totalTossersPerHour = 0;
@@ -161,8 +160,6 @@ function hourlyTotal() {
     totalCookiesPerHourArr[i] = totalCookiesPerHour;
     totalTossersPerHourArr[i] = totalTossersPerHour;
   }
-  console.log('total cookies per hour', totalCookiesPerHour);
-  console.log('total cookies per hour array', totalCookiesPerHourArr);
 }
 
 //function for rendering footer (hourly total) row
@@ -200,6 +197,7 @@ function renderStaffTable() {
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
+//function for adding new stores
 function addNewStore(e) {
   e.preventDefault();
 
@@ -219,11 +217,14 @@ function addNewStore(e) {
   renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
   e.target.storename.value = '';
+  e.target.storename.className = '';
   e.target.mincustomers.value = '';
+  e.target.mincustomers.className = '';
   e.target.maxcustomemrs.value = '';
+  e.target.maxcustomemrs.className = '';
   e.target.cookiespercustomer.value = '';
+  e.target.cookiespercustomer.className = '';
 }
-
 
 //creating stores using Store constructor function
 new Store ('1st and Pike', 23, 65, 6.3);

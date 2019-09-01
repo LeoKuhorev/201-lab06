@@ -177,6 +177,7 @@ p {
   text-align: center;
   width: 70%;  
   font-weight: 900;
+  outline: none;
 }
 #new-store input::placeholder {
   font-weight: 300;
@@ -187,7 +188,6 @@ p {
 }
 #addstore { 
   margin-top: 10%;
-  outline:none;
   background: rgba(255, 255, 255, 0.6);
   box-shadow: 5px 5px 8px 5px rgba(0,0,0,0.2);
   border-radius: 5px;

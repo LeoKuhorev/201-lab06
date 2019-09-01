@@ -233,9 +233,6 @@ tbody tr td:last-child {
   min-width: 6em;
   max-width: 6em;
  }
-#sales thead, #staff thead {
-  background: rgba(56, 51, 51, 0.3);
-}
 table, td, th {
   vertical-align: middle;
   border: 1px solid white;
@@ -243,6 +240,15 @@ table, td, th {
 }
 .red {
   background: rgba(216, 13, 13, 0.3);
+}
+.yellow {
+  background: rgba(233, 135, 55, 0.3);
+}
+.green {
+  background: rgba(124, 238, 130, 0.3);
+}
+.grey {
+  background: rgba(56, 51, 51, 0.3);
 }
 .white {
   background: rgba(255, 255, 255, 0.6);

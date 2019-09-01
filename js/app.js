@@ -10,27 +10,96 @@ var staffBodyEl = document.getElementById('staff-body');
 var staffFooterEl = document.getElementById('staff-foot');
 var newStoreEl = document.getElementById('new-store');
 var trEl;
-var thEl;
-var tdEl;
+var element;
 
-// hours of operation
+//hours of operation
 var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
-// adjustments for foot traffic based on research
+//control curve array showing adjustments for customers per hour
 var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+
+//how many customers 1 tosser can serve
+var customersPerServer = 10;
+
+//array with store objects
+var storesArr = [];
 
 //arrays with hourly totals of cookies sold and tossers needed
 var totalCookiesPerHourArr = [];
 var totalTossersPerHourArr = [];
-
-//array with store objects
-var storesArr = [];
+var totalArr = [];
 
 //totals for location
 var dailyLocationCookiesTotal;
 var dailyLocationTossersTotal;
 
 //FUNCTIONS
+//store object constructor function
+function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
+  this.name = name;
+  this.minCustomers = minCustomers;
+  this.maxCustomers = maxCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.customersPerHourArr = [];
+  this.tossersPerHourArr = [];
+  this.cookiesSoldPerHourArr = [];
+  this.totalPerLocation = 0;
+  this.maxTossers = 0;
+  storesArr.push(this);
+}
+
+//object prototype for generating random number of customers between min and max, and counting how many tossers needed to serve them
+Store.prototype.randomCustomers = function () {
+  for (var i = 0; i < operationHoursArr.length; i++){
+    this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
+    var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/customersPerServer);
+    if (tossersPerHour < 2) {
+      this.tossersPerHourArr.push(2);
+    } else {
+      this.tossersPerHourArr.push(tossersPerHour);
+    }
+  }
+  this.maxTossers = Math.max.apply(null, this.tossersPerHourArr);
+};
+
+//object prototype for generating number of cookies sold
+Store.prototype.randomCookies = function() {
+  this.randomCustomers();
+  for (var i = 0; i < operationHoursArr.length; i++){
+    this.cookiesSoldPerHourArr[i] = Math.floor(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
+    this.totalPerLocation += this.cookiesSoldPerHourArr[i];
+  }
+};
+
+//object prototype for rendering sales table
+Store.prototype.renderSales = function() {
+  this.randomCookies();
+  renderTr(salesBodyEl);
+  renderEl('td', this.name);
+  element.className = 'grey';
+  for (var i = 0; i < operationHoursArr.length; i++) {
+    aboveAvg(this.cookiesSoldPerHourArr[i], this.cookiesSoldPerHourArr);
+  }
+  for (i = 0; i < storesArr.length; i++){
+    totalArr[i] = storesArr[i].totalPerLocation;
+  }
+  aboveAvg(this.totalPerLocation, totalArr);
+};
+
+//object prototype for rendering tossers table
+Store.prototype.renderTossers = function() {
+  renderTr(staffBodyEl);
+  renderEl('td', this.name);
+  element.className = 'grey';
+  for (var i = 0; i < operationHoursArr.length; i++) {
+    aboveAvg(this.tossersPerHourArr[i], this.tossersPerHourArr);
+  }
+  for (i = 0; i < storesArr.length; i++){
+    totalArr[i] = storesArr[i].maxTossers;
+  }
+  aboveAvg(this.maxTossers, totalArr);
+};
+
 //function that generates a random number between two numbers (including min and max values)
 function generateRandom(min, max) {
   min = Math.ceil(min);
@@ -38,7 +107,7 @@ function generateRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//function that count avg array value
+//function that counts avg array value
 function avg(array) {
   var sum = 0;
   for (var i = 0; i < array.length; i++) {
@@ -53,95 +122,35 @@ function renderTr(parentElement) {
   parentElement.appendChild(trEl);
 }
 
-//function for rendering <th> element
-function renderTh(textContent, parentElement){
-  thEl = document.createElement('th');
-  thEl.textContent = textContent;
-  parentElement.appendChild(thEl);
+//function for rendering table elements
+function renderEl(elementType, textContent){
+  element = document.createElement(elementType);
+  element.textContent = textContent;
+  trEl.appendChild(element);
 }
 
-//function for rendering <td> element
-function renderTd(textContent, parentElement) {
-  tdEl = document.createElement('td');
-  tdEl.textContent = textContent;
-  parentElement.appendChild(tdEl);
-}
-
-//store object constructor function
-function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
-  this.name = name;
-  this.minCustomers = minCustomers;
-  this.maxCustomers = maxCustomers;
-  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-  this.customersPerHourArr = [];
-  this.tossersPerHourArr = [];
-  this.cookiesSoldPerHourArr = [];
-  this.totalPerLocation = 0;
-  this.maxTossers = 0;
-  this.randomCustomers = function () {
-    for (var i = 0; i < operationHoursArr.length; i++){
-      var randomCustomersPerHour = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
-      this.customersPerHourArr.push(randomCustomersPerHour);
-      var tossersPerHour = Math.ceil(randomCustomersPerHour/20);
-      if (tossersPerHour < 2) {
-        this.tossersPerHourArr.push(2);
-      } else {
-        this.tossersPerHourArr.push(tossersPerHour);
-      }
-    }
-    this.maxTossers = Math.max.apply(null, this.tossersPerHourArr);
-  };
-  this.randomCookies = function() {
-    this.randomCustomers();
-    for (var i = 0; i < operationHoursArr.length; i++){
-      var cookiesSold = Math.floor(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
-      this.cookiesSoldPerHourArr.push(cookiesSold);
-      this.totalPerLocation += cookiesSold;
-    }
-  };
-  this.renderSales = function() {
-    this.randomCookies();
-    renderTr(salesBodyEl);
-    renderTd(this.name, trEl);
-    for (var i = 0; i < operationHoursArr.length; i++) {
-      if (this.cookiesSoldPerHourArr[i] > avg(this.cookiesSoldPerHourArr)) {
-        renderTd(this.cookiesSoldPerHourArr[i], trEl);
-        tdEl.className = 'red';
-      } else {
-        renderTd(this.cookiesSoldPerHourArr[i], trEl);
-      }
-    }
-    renderTd(this.totalPerLocation, trEl);
-  };
-  this.renderTossers = function() {
-    renderTr(staffBodyEl);
-    renderTd(this.name, trEl);
-    for (var i = 0; i < operationHoursArr.length; i++) {
-      if (this.tossersPerHourArr[i] > avg(this.tossersPerHourArr)) {
-        renderTd(this.tossersPerHourArr[i], trEl);
-        tdEl.className = 'red';
-      } else {
-        renderTd(this.tossersPerHourArr[i], trEl);
-      }
-    }
-    if (this.maxTossers > avg(this.tossersPerHourArr)) {
-      renderTd(this.maxTossers, trEl);
-      tdEl.className = 'red';
-    } else {
-      renderTd(this.maxTossers, trEl);
-    }
-  };
-  storesArr.push(this);
+//function for adding className depending on value to avg ratio
+function aboveAvg(currentValue, avgValue) {
+  if (currentValue > 1.2 * avg(avgValue)) {
+    renderEl('td', currentValue);
+    element.className = 'red';
+  } else if (currentValue < 0.8 * avg(avgValue)){
+    renderEl('td', currentValue);
+    element.className = 'green';
+  } else {
+    renderEl('td', currentValue);
+    element.className = 'yellow';
+  }
 }
 
 //function for rendering table header row
 function renderHeader(totalRowName, parentElement) {
   renderTr(parentElement);
-  renderTh('LOCATON / TIME', trEl);
+  renderEl('th', 'LOCATON / TIME');
   for (var i = 0; i < operationHoursArr.length; i++) {
-    renderTh(operationHoursArr[i], trEl);
+    renderEl('th', operationHoursArr[i]);
   }
-  renderTh(totalRowName, trEl);
+  renderEl('th', totalRowName);
 }
 
 //function for getting hourly total
@@ -165,16 +174,13 @@ function hourlyTotal() {
 //function for rendering footer (hourly total) row
 function renderFooter(hourlyValueArr, dailyValue, parentElement) {
   renderTr(parentElement);
-  renderTd('TOTALS', trEl);
+  renderEl('td', 'TOTALS');
+  element.className = 'grey';
   for (var i = 0; i < operationHoursArr.length; i++) {
-    if (hourlyValueArr[i] > avg(hourlyValueArr)) {
-      renderTd(hourlyValueArr[i], trEl);
-      tdEl.className = 'red';
-    } else {
-      renderTd(hourlyValueArr[i], trEl);
-    }
+    aboveAvg(hourlyValueArr[i], hourlyValueArr);
   }
-  renderTd(dailyValue, trEl);
+  renderEl('td', dailyValue);
+  element.className = 'grey';
 }
 
 //function for rendering the entire sales table
@@ -233,9 +239,9 @@ new Store ('Seattle Center', 11, 38, 3.7);
 new Store ('Capitol Hill', 20, 38, 2.3);
 new Store ('Alki', 2, 16, 4.6);
 
-//EVENT LISTENERS
-newStoreEl.addEventListener('submit', addNewStore);
-
 //RENDERING
 renderSalesTable();
 renderStaffTable();
+
+//EVENT LISTENERS
+newStoreEl.addEventListener('submit', addNewStore);

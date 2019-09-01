@@ -158,6 +158,48 @@ p {
   line-height: 2em;
   text-align: justify;
 }
+#new-store {
+  text-align: center;
+  width: 30%;
+  padding: 2% 0;
+  margin: auto;
+  font-family: 'Poiret One', cursive;
+  font-size: 16pt;
+  font-weight: bold;
+  border: 1px solid white;
+  box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+#new-store label {
+  display: block;
+}
+#new-store input {
+  text-align: center;
+  width: 70%;  
+  font-weight: 900;
+}
+#new-store input::placeholder {
+  font-weight: 300;
+  color: rgba(87, 87, 87, 0.6);
+}
+#new-store input:focus::placeholder {
+  color: rgba(87, 87, 87, 0.2);
+}
+#addstore { 
+  margin-top: 10%;
+  outline:none;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 5px 5px 8px 5px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+#addstore:hover {
+  background: rgba(56, 51, 51, 0.3);
+  
+}
+#addstore:active {
+  background: rgba(56, 51, 51, 0.5);
+  transform: translateY(4px);
+}
 #data {
   position: relative;
   text-align: center;
@@ -177,6 +219,7 @@ table {
   font-size: 14pt;
   font-weight: 900;
   box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
+  border-radius: 3px;
 }
 thead tr th:first-child,
 tbody tr td:first-child {

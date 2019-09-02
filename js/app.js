@@ -203,6 +203,12 @@ function renderStaffTable() {
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
+//function for resetting value and class of elements
+function reset(element) {
+  element.value = '';
+  element.className = 'white';
+}
+
 //function for adding new stores
 function addNewStore(e) {
   e.preventDefault();
@@ -222,14 +228,10 @@ function addNewStore(e) {
   hourlyTotal();
   renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
-  e.target.storename.value = '';
-  e.target.storename.className = 'white';
-  e.target.mincustomers.value = '';
-  e.target.mincustomers.className = 'white';
-  e.target.maxcustomemrs.value = '';
-  e.target.maxcustomemrs.className = 'white';
-  e.target.cookiespercustomer.value = '';
-  e.target.cookiespercustomer.className = 'white';
+  reset(e.target.storename);
+  reset(e.target.mincustomers);
+  reset(e.target.maxcustomemrs);
+  reset(e.target.cookiespercustomer);
 }
 
 //creating stores using Store constructor function

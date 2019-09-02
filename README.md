@@ -16,7 +16,7 @@ deployed site link: https://leokuhorev.github.io/cookie-stand/
 | Alki          | 2           |  16         |  4.6              |
 
 and control curve for number of customers per hour: 
-'[0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6]'
+`[0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6]`
 
 Number of customers each tosser can serve per hour changed from **20** to **10** to add more diversity to the tossers table.
 
@@ -24,6 +24,6 @@ Values in every table are highlighted to show the most busy/slow hours. Total co
 
 
 
-All pictures taken from [unsplash.com](https://unsplash.com/)
+All pictures are taken from [unsplash.com](https://unsplash.com/)
 
 Cookie icon by [Icons8](https://icons8.com/icon/97693/cookie)

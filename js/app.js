@@ -203,7 +203,7 @@ function renderStaffTable() {
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
-//function for resetting value and class of elements
+//function for resetting values of the input form elements, and setting their class to 'white'
 function reset(element) {
   element.value = '';
   element.className = 'white';
@@ -216,7 +216,7 @@ function addNewStore(e) {
   var storeName = e.target.storename.value;
   var minCustomers = parseInt(e.target.mincustomers.value);
   var maxCustomemrs = parseInt(e.target.maxcustomemrs.value);
-  var cookiesPerCustomer = parseInt(e.target.cookiespercustomer.value);
+  var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
 
   new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
   salesFooterEl.innerHTML = '';
@@ -234,6 +234,15 @@ function addNewStore(e) {
   reset(e.target.cookiespercustomer);
 }
 
+//function for changing input color to red if user didn't enter anything
+function changeClassRed(e) {
+  if(e.target.value === '') {
+    e.target.className = 'red';
+  } else {
+    e.target.className = 'white';
+  }
+}
+
 //creating stores using Store constructor function
 new Store ('1st and Pike', 23, 65, 6.3);
 new Store ('SeaTac Airport', 3, 24, 1.2);
@@ -247,3 +256,4 @@ renderStaffTable();
 
 //EVENT LISTENERS
 newStoreEl.addEventListener('submit', addNewStore);
+newStoreEl.addEventListener('focusout', changeClassRed);

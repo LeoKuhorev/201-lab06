@@ -34,11 +34,11 @@
                 <label>Store Name:</label>
                 <input name="storename" type="text" class="white" placeholder="Enter store name" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Minimum customers:</label>
-                <input name="mincustomers" type="number" class="white" min="0" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="mincustomers" type="number" class="white" min="1" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Maximum customers:</label>
-                <input name="maxcustomemrs" type="number" class="white" min="0" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="maxcustomemrs" type="number" class="white" min="1" placeholder="Enter number of customers" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <label>Cookies per customer:</label>
-                <input name="cookiespercustomer" type="number" class="white" step="0.1" min="0" placeholder="Enter number of cookies" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
+                <input name="cookiespercustomer" type="number" class="white" step="0.1" min="0.1" placeholder="Enter number of cookies" oninvalid="this.className = 'red';" oninput="this.className = 'white';" required />
                 <input id="addstore" type="submit" name="addnewstore" value="ADD NEW STORE" />
             </fieldset>
           </form>

@@ -30,8 +30,7 @@ var totalTossersPerHourArr = [];
 var totalArr = [];
 
 //totals for location
-var dailyLocationCookiesTotal;
-var dailyLocationTossersTotal;
+var dailyLocationCookiesTotal, dailyLocationTossersTotal;
 
 //FUNCTIONS
 //store object constructor function
@@ -102,8 +101,6 @@ Store.prototype.renderTossers = function() {
 
 //function that generates a random number between two numbers (including min and max values)
 function generateRandom(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -219,8 +216,8 @@ function addNewStore(e) {
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
 
   new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
-  salesFooterEl.innerHTML = '';
-  staffFooterEl.innerHTML = '';
+  salesFooterEl.removeChild(salesFooterEl.firstChild);
+  staffFooterEl.removeChild(staffFooterEl.firstChild);
   for (var i = storesArr.length-1; i < storesArr.length; i++) {
     storesArr[i].renderSales();
     storesArr[i].renderTossers();

@@ -10,7 +10,6 @@ function showSales () {
   if (userNameEl.value.toLowerCase() === 'pat') {
     if (passwordEl.value === 'Salmon') {
       loginSalesEl.href = 'sales.html';
-      loginSalesEl.innerHTML = '<li>SALES</li>';
       loginFormEl.innerHTML = '<p id="welcome">Welcome Pat! Sales page is available now<p>';
       showMessage = false;
     } else {

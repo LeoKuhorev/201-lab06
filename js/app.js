@@ -24,7 +24,7 @@ var customersPerServer = 10;
 //array with store objects
 var storesArr = [];
 
-//arrays with hourly totals of cookies sold and tossers needed
+//arrays with hourly totals of cookies sold, tossers needed, and dynamically assigned values of daily total/ tossers max
 var totalCookiesPerHourArr = [];
 var totalTossersPerHourArr = [];
 var totalArr = [];
@@ -44,6 +44,7 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
   this.cookiesSoldPerHourArr = [];
   this.totalPerLocation = 0;
   this.maxTossers = 0;
+
   storesArr.push(this);
 }
 
@@ -77,12 +78,12 @@ Store.prototype.renderSales = function() {
   renderEl('td', this.name);
   element.className = 'grey';
   for (var i = 0; i < operationHoursArr.length; i++) {
-    aboveAvg(this.cookiesSoldPerHourArr[i], this.cookiesSoldPerHourArr);
+    colorHighlightAvg(this.cookiesSoldPerHourArr[i], this.cookiesSoldPerHourArr);
   }
   for (i = 0; i < storesArr.length; i++){
     totalArr[i] = storesArr[i].totalPerLocation;
   }
-  aboveAvg(this.totalPerLocation, totalArr);
+  colorHighlightAvg(this.totalPerLocation, totalArr);
 };
 
 //object prototype for rendering tossers table
@@ -91,12 +92,12 @@ Store.prototype.renderTossers = function() {
   renderEl('td', this.name);
   element.className = 'grey';
   for (var i = 0; i < operationHoursArr.length; i++) {
-    aboveAvg(this.tossersPerHourArr[i], this.tossersPerHourArr);
+    colorHighlightAvg(this.tossersPerHourArr[i], this.tossersPerHourArr);
   }
   for (i = 0; i < storesArr.length; i++){
     totalArr[i] = storesArr[i].maxTossers;
   }
-  aboveAvg(this.maxTossers, totalArr);
+  colorHighlightAvg(this.maxTossers, totalArr);
 };
 
 //function that generates a random number between two numbers (including min and max values)
@@ -127,11 +128,11 @@ function renderEl(elementType, textContent){
 }
 
 //function for adding className depending on value to avg ratio
-function aboveAvg(currentValue, avgValue) {
-  if (currentValue > 1.2 * avg(avgValue)) {
+function colorHighlightAvg(currentValue, arrayOfValues) {
+  if (currentValue > 1.2 * avg(arrayOfValues)) {
     renderEl('td', currentValue);
     element.className = 'red';
-  } else if (currentValue < 0.8 * avg(avgValue)){
+  } else if (currentValue < 0.8 * avg(arrayOfValues)){
     renderEl('td', currentValue);
     element.className = 'green';
   } else {
@@ -174,7 +175,7 @@ function renderFooter(hourlyValueArr, dailyValue, parentElement) {
   renderEl('td', 'TOTALS');
   element.className = 'grey';
   for (var i = 0; i < operationHoursArr.length; i++) {
-    aboveAvg(hourlyValueArr[i], hourlyValueArr);
+    colorHighlightAvg(hourlyValueArr[i], hourlyValueArr);
   }
   renderEl('td', dailyValue);
   element.className = 'grey';
@@ -190,7 +191,7 @@ function renderSalesTable() {
   renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
 }
 
-//function for rendering staffing table
+//function for rendering the entire staffing table
 function renderStaffTable() {
   renderHeader('DAILY LOCATION MAX', staffHeadEl);
   for (var i = 0; i < storesArr.length; i++) {
@@ -200,7 +201,7 @@ function renderStaffTable() {
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
 }
 
-//function for resetting values of the input form elements, and setting their class to 'white'
+//function for resetting values of the input form elements and resetting their class to 'white'
 function reset(element) {
   element.value = '';
   element.className = 'white';
@@ -216,22 +217,30 @@ function addNewStore(e) {
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
 
   new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
+
+  //removing current footers from both tables
   salesFooterEl.removeChild(salesFooterEl.firstChild);
   staffFooterEl.removeChild(staffFooterEl.firstChild);
+
+  //adding 1 row below the current store/tossers tables
   for (var i = storesArr.length-1; i < storesArr.length; i++) {
     storesArr[i].renderSales();
     storesArr[i].renderTossers();
   }
+
+  //recalculate totals and append new footers for both tables
   hourlyTotal();
   renderFooter(totalCookiesPerHourArr, dailyLocationCookiesTotal, salesFooterEl);
   renderFooter(totalTossersPerHourArr, dailyLocationTossersTotal, staffFooterEl);
+
+  //clear input forms and reset their class to 'white'
   reset(e.target.storename);
   reset(e.target.mincustomers);
   reset(e.target.maxcustomemrs);
   reset(e.target.cookiespercustomer);
 }
 
-//function for changing input color to red if user didn't enter anything
+//function for changing input form color to red if user didn't enter anything and switched to the next one
 function changeClassRed(e) {
   if(e.target.value === '') {
     e.target.className = 'red';

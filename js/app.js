@@ -19,7 +19,7 @@ var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM',
 var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
 
 //how many customers 1 tosser can serve
-var customersPerServer = 10;
+var CUSTOMERS_PER_SERVER = 10;
 
 //array with store objects
 var storesArr = [];
@@ -52,7 +52,7 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
 Store.prototype.randomCustomers = function () {
   for (var i = 0; i < operationHoursArr.length; i++){
     this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
-    var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/customersPerServer);
+    var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/CUSTOMERS_PER_SERVER);
     if (tossersPerHour < 2) {
       this.tossersPerHourArr.push(2);
     } else {

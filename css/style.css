@@ -147,6 +147,7 @@ h6 {
 }
 #about img:active, #our-cookies img:active {
   width: 95%;
+  transition: 350ms;
 }
 #our-cookies img {
   float: right;
@@ -258,6 +259,22 @@ td:hover, th:hover {
   color: white;
   font-weight: 900;
 }
+#locations {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+#locations p {
+  text-align: center;
+  font-size: 16pt;
+}
+.bold {
+  color: rgb(44, 25, 155);
+  font-weight: 900;
+}
+iframe {
+  border: 1px solid black;
+}
 footer {
   text-align: right;
   color: #fad5cf; 
@@ -272,11 +289,20 @@ footer {
   float: left;
 }
 footer ul li {
-  display: inline-block;
+  display: block;
   padding: 20px 40px;
+  float: left;
+  position: relative;
+  left: 20%;
 }
 footer a {
   color: #fad5cf;
+}
+footer ul img {
+  height: 60px;
+  padding: 0;
+  position: relative;
+  right: 0%;
 }
 footer ul li:hover {  
   color: #ffffff;

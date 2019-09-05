@@ -66,7 +66,7 @@ Store.prototype.randomCustomers = function () {
 Store.prototype.randomCookies = function() {
   this.randomCustomers();
   for (var i = 0; i < operationHoursArr.length; i++){
-    this.cookiesSoldPerHourArr[i] = Math.floor(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
+    this.cookiesSoldPerHourArr[i] = Math.ceil(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
     this.totalPerLocation += this.cookiesSoldPerHourArr[i];
   }
 };

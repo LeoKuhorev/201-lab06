@@ -288,6 +288,12 @@ footer {
 .left {
   float: left;
 }
+#store img {
+  display: inline-block;
+}
+#store p {
+  width: 40%;
+}
 footer ul li {
   display: block;
   padding: 20px 40px;

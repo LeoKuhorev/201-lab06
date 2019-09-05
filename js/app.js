@@ -13,10 +13,10 @@ var trEl;
 var element;
 
 //hours of operation
-var operationHoursArr = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+var OPERATION_HOURS_ARR = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
 //control curve array showing adjustments for customers per hour
-var correctionArr = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
+var CONTROL_CURVE_ARR = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
 
 //how many customers 1 tosser can serve
 var CUSTOMERS_PER_SERVER = 10;
@@ -50,8 +50,8 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
 
 //object prototype for generating random number of customers between min and max, and counting how many tossers needed to serve them
 Store.prototype.randomCustomers = function () {
-  for (var i = 0; i < operationHoursArr.length; i++){
-    this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * correctionArr[i];
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++){
+    this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * CONTROL_CURVE_ARR[i];
     var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/CUSTOMERS_PER_SERVER);
     if (tossersPerHour < 2) {
       this.tossersPerHourArr.push(2);
@@ -65,7 +65,7 @@ Store.prototype.randomCustomers = function () {
 //object prototype for generating number of cookies sold
 Store.prototype.randomCookies = function() {
   this.randomCustomers();
-  for (var i = 0; i < operationHoursArr.length; i++){
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++){
     this.cookiesSoldPerHourArr[i] = Math.ceil(this.customersPerHourArr[i] * this.avgCookiesPerCustomer);
     this.totalPerLocation += this.cookiesSoldPerHourArr[i];
   }
@@ -77,7 +77,7 @@ Store.prototype.renderSales = function() {
   renderTr(salesBodyEl);
   renderEl('td', this.name);
   element.className = 'grey';
-  for (var i = 0; i < operationHoursArr.length; i++) {
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
     colorHighlightAvg(this.cookiesSoldPerHourArr[i], this.cookiesSoldPerHourArr);
   }
   for (i = 0; i < storesArr.length; i++){
@@ -91,7 +91,7 @@ Store.prototype.renderTossers = function() {
   renderTr(staffBodyEl);
   renderEl('td', this.name);
   element.className = 'grey';
-  for (var i = 0; i < operationHoursArr.length; i++) {
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
     colorHighlightAvg(this.tossersPerHourArr[i], this.tossersPerHourArr);
   }
   for (i = 0; i < storesArr.length; i++){
@@ -145,15 +145,15 @@ function colorHighlightAvg(currentValue, arrayOfValues) {
 function renderHeader(totalRowName, parentElement) {
   renderTr(parentElement);
   renderEl('th', 'LOCATON / TIME');
-  for (var i = 0; i < operationHoursArr.length; i++) {
-    renderEl('th', operationHoursArr[i]);
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
+    renderEl('th', OPERATION_HOURS_ARR[i]);
   }
   renderEl('th', totalRowName);
 }
 
 //function for getting hourly total
 function hourlyTotal() {
-  for (var i = 0; i < operationHoursArr.length; i++) {
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
     var totalCookiesPerHour = 0;
     var totalTossersPerHour = 0;
     dailyLocationCookiesTotal = 0;
@@ -174,7 +174,7 @@ function renderFooter(hourlyValueArr, dailyValue, parentElement) {
   renderTr(parentElement);
   renderEl('td', 'TOTALS');
   element.className = 'grey';
-  for (var i = 0; i < operationHoursArr.length; i++) {
+  for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
     colorHighlightAvg(hourlyValueArr[i], hourlyValueArr);
   }
   renderEl('td', dailyValue);

@@ -3,7 +3,7 @@
 
 deployed site link: https://leokuhorev.github.io/cookie-stand/
 
-- index.html page has an imitation of login, so to get access to sales.html page enter username **_Pat_** and password **_Salmon_**
+- index.html page has an imitation of login, so to get access to sales.html page enter username **_Pat_** and password **_Salmon_**;
 
 - sales.html page shows 2 tables based on the incoming data from this table:
 
@@ -20,9 +20,11 @@ and control curve for number of customers per hour:
 
 Number of customers each tosser can serve per hour changed from **20** to **10** to add more diversity to the tossers table.
 
-Values in every table are highlighted to show the most busy/slow hours. Total column shows the most busy/slow stores.
+Values in every table are highlighted to show the most busy/slow hours. Total column shows the most busy/slow stores;
 
+- location.html shows made up addresses with iframe google maps;
 
+- store.html has a poor imitation of a merchandise shop;
 
 All pictures are taken from [unsplash.com](https://unsplash.com/)
 

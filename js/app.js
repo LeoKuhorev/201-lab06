@@ -9,8 +9,7 @@ var staffHeadEl = document.getElementById('staff-head');
 var staffBodyEl = document.getElementById('staff-body');
 var staffFooterEl = document.getElementById('staff-foot');
 var newStoreEl = document.getElementById('new-store');
-var trEl;
-var element;
+var trEl, element;
 
 //hours of operation
 var OPERATION_HOURS_ARR = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
@@ -76,10 +75,12 @@ Store.prototype.randomCookies = function() {
 Store.prototype.renderSales = function() {
   this.randomCookies();
   renderTr(salesBodyEl);
-  renderEl('td', this.name);
+  renderEl('th', this.name);
   element.className = 'grey';
+  element.title = 'click to edit this store';
   for (var i = 0; i < OPERATION_HOURS_ARR.length; i++) {
     colorHighlightAvg(this.cookiesSoldPerHourArr[i], this.cookiesSoldPerHourArr);
+    element.title = 'click to edit this store';
   }
   for (i = 0; i < storesArr.length; i++){
     totalArr[i] = storesArr[i].totalPerLocation;
@@ -218,11 +219,10 @@ function addNewStore(e) {
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
   var storeNotFound = true;
 
-  //if store already exist in storesArr - update its values
+  //if store already exists in storesArr - update its values
   for (var i = 0; i < storesArr.length; i++) {
     if (storeName === storesArr[i].name) {
       storeNotFound = false;
-      storesArr[i].name = storeName;
       storesArr[i].minCustomers = minCustomers;
       storesArr[i].maxCustomers = maxCustomemrs;
       storesArr[i].avgCookiesPerCustomer = cookiesPerCustomer;

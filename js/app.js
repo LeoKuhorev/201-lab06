@@ -19,7 +19,7 @@ var OPERATION_HOURS_ARR = ['6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM
 var CONTROL_CURVE_ARR = [0.5, 0.75, 1.0, 0.6, 0.8, 1.0, 0.7, 0.4, 0.6, 0.9, 0.7, 0.5, 0.3, 0.4, 0.6];
 
 //how many customers 1 tosser can serve
-var CUSTOMERS_PER_SERVER = 10;
+var CUSTOMERS_PER_TOSSER = 10;
 
 //array with store objects
 var storesArr = [];
@@ -53,7 +53,7 @@ Store.prototype.randomCustomers = function () {
   this.tossersPerHourArr.length = 0;
   for (var i = 0; i < OPERATION_HOURS_ARR.length; i++){
     this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * CONTROL_CURVE_ARR[i];
-    var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/CUSTOMERS_PER_SERVER);
+    var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/CUSTOMERS_PER_TOSSER);
     if (tossersPerHour < 2) {
       this.tossersPerHourArr.push(2);
     } else {
@@ -218,6 +218,7 @@ function addNewStore(e) {
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
   var storeNotFound = true;
 
+  //if store already exist in storesArr - update its values
   for (var i = 0; i < storesArr.length; i++) {
     if (storeName === storesArr[i].name) {
       storeNotFound = false;
@@ -231,17 +232,17 @@ function addNewStore(e) {
     new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
   }
 
+  //clearing table bodies and footers from both tables
   while(salesBodyEl.firstChild) {
     salesBodyEl.removeChild(salesBodyEl.firstChild);
   }
   while(staffBodyEl.firstChild) {
     staffBodyEl.removeChild(staffBodyEl.firstChild);
   }
-  //removing current footers from both tables
   salesFooterEl.removeChild(salesFooterEl.firstChild);
   staffFooterEl.removeChild(staffFooterEl.firstChild);
 
-  //adding 1 row below the current store/tossers tables
+  //render the tables
   for (i = 0; i < storesArr.length; i++) {
     storesArr[i].renderSales();
     storesArr[i].renderTossers();
@@ -262,7 +263,6 @@ function addNewStore(e) {
 //founction for pulling current store info when clicked on the table
 function changeValue(e) {
   var currentName = e.target.parentElement.firstChild.textContent;
-  console.log(e.target.parentElement.firstChild.textContent);
   for (var i = 0; i < storesArr.length; i++) {
     if (storesArr[i].name === currentName) {
       newStoreEl.elements.item(1).value = currentName;

@@ -22,9 +22,13 @@ Number of customers each tosser can serve per hour changed from **20** to **10**
 
 Values in every table are highlighted to show the most busy/slow hours. Total column shows the most busy/slow stores;
 
+When user clicks on any row in sales table the incoming numbers for this store will be copied to the form inputs giving user the possibility to change them by clicking "Add store" button;
+
 - location.html shows made up addresses with iframe google maps;
 
 - store.html has a poor imitation of a merchandise shop;
+
+----------------------------------------------------------------------------------------------------------------
 
 All pictures are taken from [unsplash.com](https://unsplash.com/)
 

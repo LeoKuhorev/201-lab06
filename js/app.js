@@ -215,15 +215,31 @@ function addNewStore(e) {
   var minCustomers = parseInt(e.target.mincustomers.value);
   var maxCustomemrs = parseInt(e.target.maxcustomemrs.value);
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
+  var storeNotFound = true;
 
-  new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
+  for (var i = 0; i < storesArr.length; i++) {
+    if (storeName === storesArr[i].name) {
+      storeNotFound = false;
+      storesArr[i].name = storeName;
+      storesArr[i].minCustomers = minCustomers;
+      storesArr[i].maxCustomers = maxCustomemrs;
+      storesArr[i].avgCookiesPerCustomer = cookiesPerCustomer;
+    }
+  }
+  if (storeNotFound) {
+    new Store(storeName, minCustomers, maxCustomemrs, cookiesPerCustomer);
+  }
+
+  while(salesBodyEl.firstChild) {
+    salesBodyEl.removeChild(salesBodyEl.firstChild);
+  }
 
   //removing current footers from both tables
   salesFooterEl.removeChild(salesFooterEl.firstChild);
   staffFooterEl.removeChild(staffFooterEl.firstChild);
 
   //adding 1 row below the current store/tossers tables
-  for (var i = storesArr.length-1; i < storesArr.length; i++) {
+  for (i = 0; i < storesArr.length; i++) {
     storesArr[i].renderSales();
     storesArr[i].renderTossers();
   }
@@ -238,6 +254,20 @@ function addNewStore(e) {
   reset(e.target.mincustomers);
   reset(e.target.maxcustomemrs);
   reset(e.target.cookiespercustomer);
+}
+
+//founction for pulling current store info when clicked on the table
+function changeValue(e) {
+  var currentName = e.target.parentElement.firstChild.textContent;
+  console.log(e.target.parentElement.firstChild.textContent);
+  for (var i = 0; i < storesArr.length; i++) {
+    if (storesArr[i].name === currentName) {
+      newStoreEl.elements.item(1).value = currentName;
+      newStoreEl.elements.item(2).value = storesArr[i].minCustomers;
+      newStoreEl.elements.item(3).value = storesArr[i].maxCustomers;
+      newStoreEl.elements.item(4).value = storesArr[i].avgCookiesPerCustomer;
+    }
+  }
 }
 
 //function for changing input form color to red if user didn't enter anything and switched to the next one
@@ -263,3 +293,4 @@ renderStaffTable();
 //EVENT LISTENERS
 newStoreEl.addEventListener('submit', addNewStore);
 newStoreEl.addEventListener('focusout', changeClassRed);
+salesBodyEl.addEventListener('click', changeValue);

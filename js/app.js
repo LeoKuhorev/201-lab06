@@ -50,6 +50,7 @@ function Store(name, minCustomers, maxCustomers, avgCookiesPerCustomer) {
 
 //object prototype for generating random number of customers between min and max, and counting how many tossers needed to serve them
 Store.prototype.randomCustomers = function () {
+  this.tossersPerHourArr.length = 0;
   for (var i = 0; i < OPERATION_HOURS_ARR.length; i++){
     this.customersPerHourArr[i] = generateRandom(this.minCustomers, this.maxCustomers) * CONTROL_CURVE_ARR[i];
     var tossersPerHour = Math.ceil( this.customersPerHourArr[i]/CUSTOMERS_PER_SERVER);
@@ -233,7 +234,9 @@ function addNewStore(e) {
   while(salesBodyEl.firstChild) {
     salesBodyEl.removeChild(salesBodyEl.firstChild);
   }
-
+  while(staffBodyEl.firstChild) {
+    staffBodyEl.removeChild(staffBodyEl.firstChild);
+  }
   //removing current footers from both tables
   salesFooterEl.removeChild(salesFooterEl.firstChild);
   staffFooterEl.removeChild(staffFooterEl.firstChild);

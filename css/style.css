@@ -227,6 +227,7 @@ table {
   font-weight: 900;
   box-shadow: 5px 10px 16px 5px rgba(0,0,0,0.2);
   border-radius: 3px;
+
 }
 thead tr th:first-child,
 tbody tr td:first-child {
@@ -244,6 +245,9 @@ table, td, th {
   vertical-align: middle;
   border: 1px solid white;
   padding: 1em 0;
+}
+#sales-body {
+  cursor: pointer;
 }
 .red {
   background: rgba(216, 13, 13, 0.3);

@@ -219,7 +219,7 @@ function addNewStore(e) {
   var cookiesPerCustomer = parseFloat(e.target.cookiespercustomer.value);
   var storeNotFound = true;
 
-  //if store already exists in storesArr - update its values
+  //if store already exist in storesArr - update its values
   for (var i = 0; i < storesArr.length; i++) {
     if (storeName === storesArr[i].name) {
       storeNotFound = false;

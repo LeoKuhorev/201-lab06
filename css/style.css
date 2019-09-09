@@ -363,7 +363,7 @@ footer ul img {
   animation: bounce 3s linear infinite;
   z-index: 5;
 }
-footer ul img:hover {
+footer ul img:hover, #fish:hover {
   animation-play-state: paused;
 }
 footer ul li:hover {  

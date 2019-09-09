@@ -275,6 +275,14 @@ function changeValue(e) {
 
 //function for changing input form color to red if user didn't enter anything and switched to the next one
 function changeClassRed(e) {
+  if (e.target === newStoreEl.elements.item(2) ||
+  e.target === newStoreEl.elements.item(3)) {
+    if (newStoreEl.elements.item(2).value > newStoreEl.elements.item(3).value &&
+    newStoreEl.elements.item(3).value !== '') {
+      alert('Maximum customers value must be equal or greater than Minimun');
+      newStoreEl.elements.item(3).value = newStoreEl.elements.item(2).value;
+    }
+  }
   if(e.target.value === '') {
     e.target.className = 'red';
   } else {
